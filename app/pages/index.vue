@@ -5,6 +5,7 @@
     </div>
     <b-form>
       <b-form-group>
+        <span>user Id:</span>
         <b-form-input
           placeholder=""
           v-model="formData.id"
@@ -23,7 +24,8 @@
         </b-button>
       </b-form-group>
     </b-form>
-    <b-table :items="items"></b-table>
+    {{testMsg}}
+    <!-- <b-table :items="items"></b-table> -->
   </section>
 </template>
 
@@ -41,7 +43,11 @@ export default {
       formData: {
         id: ''
       },
-      items: []
+      testMsg: {
+        id:'',
+        msg: '',
+        user : '',
+      }
     }
   },
   computed: {
@@ -56,41 +62,43 @@ export default {
       if(this.isCreateMode){
         try {
           await this.register({...this.formData})
-          this.items = [{
+          this.testMsg = {
             id:this.formData.id,
             msg: `registerd ${this.formData.id}`,
-            }]
-          return this.items 
+            }
           cookies.set('user',JSON.stringify(this.user))
           this.$router.push('/posts/')
+          return this.testMsg
         } catch(e){
-          this.items = [{
-            id:'',
+          this.testMsg = {
+            id:`${this.formData.id}`,
             msg: 'failed regist',
-            }]
-          return this.items 
+            user: this.$store.getters['user'],
+            }
+          return this.testMsg 
         }
       } else {
         try {
           await this.login({...this.formData})
-          this.items = [{
+          this.testMsg = {
             id:this.formData.id,
             msg: `logined ${this.formData.id}`,
-            }]
-          return this.items
+            }
           cookies.set('user',JSON.stringify(this.user))
           this.$router.push('/posts/')
+          return this.testMsg
         } catch(e){
-          this.items = [{
+          this.testMsg = {
             id:'',
             msg: 'failed login',
-            }]
-          return this.items 
+            user: this.user,
+            }
+          return this.testMsg 
         }
       }
-    }
-  },
-  ...mapActions(['login','register'])
+    },
+    ...mapActions(['login','register'])
+  }
 }
 </script>
 

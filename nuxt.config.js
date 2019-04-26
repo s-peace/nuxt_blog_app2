@@ -1,6 +1,7 @@
 import pkg from './package'
 
-export default {
+// export default {
+module.exports = {
   mode: 'universal',
   srcDir: 'app',
 
@@ -49,7 +50,7 @@ export default {
   ** Axios module configuration
   */
   axios: {
-    baseUrl: 'https://nuxt-blog-app-f0d57.firebaseio.com/',
+    baseURL: 'https://nuxt-blog-app-f0d57.firebaseio.com/',
     // See https://github.com/nuxt-community/axios-module#options
   },
 
@@ -62,5 +63,8 @@ export default {
     */
     extend(config, ctx) {
     }
+  },
+  router: {
+    middleware: ['auth-cookie']
   }
 }
