@@ -7,6 +7,9 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item :route="{path: '/posts'}">posts list</b-nav-item>
+          <b-nav-item :route="{path: `/users/${user.id}`}" v-if="user">
+            <span>{{user.id}}</span>
+          </b-nav-item>
           <no-ssr>
             <b-nav-item :route="{path: '/'}">
               <span>login</span>
@@ -20,3 +23,13 @@
     </b-navbar>
   </div>
 </template>
+
+<script>
+import {mapGetters} from "vuex"
+
+export default {
+  computed: {
+    ...mapGetters(['user'])
+  }
+}
+</script>
